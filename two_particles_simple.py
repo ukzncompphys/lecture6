@@ -5,11 +5,15 @@ x0=0;y0=0;vx0=0;vy0=0.5
 x1=1;y1=0;vx1=0;vy1=-0.5;
 
 #for simplicity, let's assume G&m are all equal to 1
-dt=0.01
+dt=0.001
 tmax=5
+dstep=10
 
 plt.ion()
+plt.clf()
+step=0
 for t in numpy.arange(0,tmax,dt):    
+    step+=1
     dx=x0-x1
     dy=y0-y1
     rsquare=dx*dx+dy*dy
@@ -33,13 +37,14 @@ for t in numpy.arange(0,tmax,dt):
     vy1 -= dt*fy1
     
 
-    plt.clf()
-    plt.plot(x0,y0,'rx')
-    plt.plot(x1,y1,'b*')
-    plt.ylim(-1.5,1.5)
-    plt.xlim(-1,2)
+
+    if step%dstep==0:
+        plt.plot(x0,y0,'rx')
+        plt.plot(x1,y1,'b*')
+        plt.ylim(-1.5,1.5)
+        plt.xlim(-1,2)
     
-    plt.draw()
-    pot=-1.0/r
-    kin=0.5*(vx0*vx0+vy0*vy0+vx1*vx1+vy1*vy1)
-    print 'kin and pot are '  + repr(kin) + '   ' + repr(pot) + '  ' + repr(pot+kin) 
+        plt.draw()
+        pot=-1.0/r
+        kin=0.5*(vx0*vx0+vy0*vy0+vx1*vx1+vy1*vy1)
+        print 'kin and pot are '  + repr(kin) + '   ' + repr(pot) + '  ' + repr(pot+kin) 
